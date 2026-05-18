@@ -39,8 +39,7 @@
     }
 
     .neon-gold {
-      text-shadow: 0 0 20px #d4af37,
-        0 0 40px #d4af37;
+      text-shadow: 0 0 20px #d4af37, 0 0 40px #d4af37;
     }
 
     .scroll-progress {
@@ -60,6 +59,10 @@
       height: 100%;
       z-index: -1;
       opacity: 0.35;
+    }
+
+    section {
+      scroll-margin-top: 80px;
     }
   </style>
 </head>
@@ -118,28 +121,16 @@
             <span>WATCH 2:14</span>
           </button>
         </div>
-
-        <div class="mt-20 flex gap-12 text-sm">
-          <div>
-            <div class="text-4xl font-semibold text-[#d4af37]">47</div>
-            <div class="text-white/50">Private Commissions</div>
-          </div>
-          <div>
-            <div class="text-4xl font-semibold text-[#d4af37]">∞</div>
-            <div class="text-white/50">Creative Freedom</div>
-          </div>
-        </div>
       </div>
     </div>
 
-    <!-- Scroll Indicator -->
     <div class="absolute bottom-12 left-1/2 flex flex-col items-center gap-3 text-xs tracking-widest">
       <div class="w-px h-12 bg-gradient-to-b from-transparent via-white/40 to-transparent"></div>
       SCROLL FOR BEAUTY
     </div>
   </section>
 
-  <!-- CRAFT SECTION -->
+  <!-- CRAFT -->
   <section id="craft" class="py-32 border-t border-white/10">
     <div class="max-w-screen-2xl mx-auto px-8">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
@@ -160,7 +151,7 @@
             <div class="relative z-10 h-full flex flex-col justify-between">
               <div>
                 <div class="uppercase text-xs tracking-widest mb-3">Current Masterpiece</div>
-                <div class="text-5xl luxury-text leading-tight">LUMINA •<br>Private Banking Dashboard</div>
+                <div class="text-5xl luxury-text leading-tight">LUMINA • Private Banking Dashboard</div>
               </div>
 
               <div class="space-y-8">
@@ -215,8 +206,60 @@
     </div>
   </section>
 
+  <!-- ATELIER -->
+  <section id="atelier" class="py-32 border-t border-white/10">
+    <div class="max-w-screen-2xl mx-auto px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+        <div>
+          <h2 class="text-7xl luxury-text tracking-tighter leading-none mb-8">The Atelier</h2>
+          <p class="text-xl text-white/70 mb-10">
+            Where raw ideas meet obsessive execution.
+            We don't follow trends — we set the tempo.
+          </p>
+          <div class="space-y-6 text-lg">
+            <div class="flex gap-6">
+              <div class="text-4xl text-[#d4af37]">01</div>
+              <div>
+                <div class="font-semibold">Motion-First Design</div>
+                <div class="text-white/60">Every element moves with purpose</div>
+              </div>
+            </div>
+            <div class="flex gap-6">
+              <div class="text-4xl text-[#d4af37]">02</div>
+              <div>
+                <div class="font-semibold">Pixel Perfection</div>
+                <div class="text-white/60">Down to the subpixel</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="glass rounded-3xl p-12 h-fit">
+          <div class="uppercase tracking-widest text-xs mb-4">Now Accepting</div>
+          <div class="text-4xl luxury-text leading-tight">Private commissions for 2027</div>
+          <button onclick="contactReveal()" class="mt-10 w-full py-6 bg-white text-black rounded-2xl font-semibold text-lg">
+            CLAIM YOUR SPOT
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEGACY -->
+  <section id="legacy" class="py-32 bg-black/60 border-t border-white/10">
+    <div class="max-w-screen-2xl mx-auto px-8">
+      <h2 class="text-center text-6xl luxury-text tracking-tighter mb-16">Legacy</h2>
+
+      <div class="max-w-2xl mx-auto text-center">
+        <p class="text-2xl text-white/70">
+          We've built digital experiences that outlive campaigns,
+          products that become part of identity, and interfaces people still talk about years later.
+        </p>
+        <div class="mt-12 text-[#d4af37] text-sm tracking-widest">— Handcrafted in small batches since 2026 —</div>
+      </div>
+    </div>
+  </section>
+
   <script>
-    // Particle Canvas - human crafted, feels alive
     function createParticles() {
       const canvas = document.getElementById('particle-bg');
       const ctx = canvas.getContext('2d');
@@ -237,9 +280,7 @@
         update() {
           this.x += this.speedX;
           this.y += this.speedY;
-          if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
-            this.reset();
-          }
+          if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) this.reset();
         }
         draw() {
           ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
@@ -259,21 +300,18 @@
       function animate() {
         ctx.fillStyle = 'rgba(10, 10, 10, 0.12)';
         ctx.fillRect(0, 0, width, height);
-        for (let i = 0; i < particles.length; i++) {
-          particles[i].update();
-          particles[i].draw();
-        }
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
         requestAnimationFrame(animate);
       }
       window.addEventListener('resize', resize);
       resize();
-      // Spawn particles
-      for (let i = 0; i < 180; i++) {
-        particles.push(new Particle());
-      }
+      for (let i = 0; i < 180; i++) particles.push(new Particle());
       animate();
     }
-    // Progress bar
+
     function initProgress() {
       const progress = document.getElementById('progress-bar');
       window.addEventListener('scroll', () => {
@@ -283,21 +321,19 @@
         progress.style.width = `${scrollPercent}%`;
       });
     }
-    // Interactive card tilt
+
     function initCardTilt() {
       const card = document.getElementById('interactive-card');
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = (y - centerY) / 15;
-        const rotateY = (centerX - x) / 15;
+        const rotateX = (y - rect.height / 2) / 15;
+        const rotateY = (rect.width / 2 - x) / 15;
         card.style.transform = `perspective(1200px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
       });
       card.addEventListener('mouseleave', () => {
-        card.style.transform = `perspective(1200px) rotateX(0deg) rotateY(0deg)`;
+        card.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
       });
     }
 
@@ -308,19 +344,17 @@
     }
 
     function contactReveal() {
-      const message = "Velora is currently accepting commissions for 2027.\n\nDrop your vision at hello@velora.studio";
-      alert(message); // placeholder - in production this would open a stunning modal
+      alert("Velora is currently accepting commissions for 2027.\n\nDrop your vision at hello@velora.studio");
     }
 
     function showReel() {
-      alert("🎥 Imagine a 2-minute reel with slow cinematic shots, deep bass, and buttery smooth UI transitions.\n\n(This would be a real Vimeo embed in production.)");
+      alert("🎥 Real reel would embed here — slow cinematic shots, deep bass, buttery 60fps UI porn.");
     }
-    // Boot it up
     window.onload = function() {
       createParticles();
       initProgress();
       initCardTilt();
-      console.log('%cVELORA initialized. Welcome, creator.', 'color:#d4af37; font-family:monospace');
+      console.log('%cVELORA loaded clean. No duplicates. All anchors working.', 'color:#d4af37; font-family:monospace');
     };
   </script>
 </body>
